@@ -1,0 +1,26 @@
+listenerHttps:
+  host: "0.0.0.0"
+  value: "${listenerHttps.private.port}"
+  port: "8082"
+  private:
+    port: "8092" 
+
+tls:
+  keystore:
+    type: "JKS"
+    path: "certs/keystore-prod.jks"
+    password: "@CONAN.GLOBAL"
+    keyPassword: "@CONAN.GLOBAL"      
+  truststore:
+    type: "JKS"
+    path: "certs/truststore-prod.jks"
+    password: "@CONAN.GLOBAL"
+    certificare:
+      path: "certs/certificare-nprod.jks"
+
+certificare:
+  oauth:
+    username: "@CONAN.APP"
+    password: "@CONAN.APP"   
+  token: "https://sudo-cpc.certi.org.br:443/api/session/login"
+  pendency: "https://sudo-cpc.certi.org.br:443/api/v1/pendency"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="get-case-test-suite.xml" />
+	<munit:test name="get-case-test-suite-get-caseFlowTest" doc:id="475ac1e5-9d48-476e-8018-6664a555253e" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get-caseFlow" doc:id="30965b61-b023-46fa-89ff-475e360ad12e" name="get-caseFlow"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true"
+	doc:name="API Autodiscovery" doc:id="169c98db-8d80-4d0d-81eb-7eb3a55468f0"
+	flowRef="certificare-system-api-main" />
+	<configuration-properties
+		doc:name="Configuration properties"
+		doc:id="a144a4e4-567d-4dfb-992e-45068a1697b7"
+		file="config/${mule.env}-properties.yaml" />
+	<http:listener-config name="api-httpListenerConfig">
+	<http:listener-connection host="${listenerHttps.host}" port="${listenerHttps.private.port}"
+	readTimeout="240000" protocol="HTTPS" tlsContext="TLS_Context_Listener"/>
+	</http:listener-config>
+	<configuration doc:name="Configuration"
+		doc:id="4ab91efb-c096-4360-8b2e-a85bb42823ff"
+		defaultErrorHandler-ref="Global_Error_Handler" />
+	<tls:context name="TLS_Context_Listener"
+		doc:name="TLS Context" doc:id="16ffeebd-b2ba-4574-9207-6f4949881dac">
+		<tls:key-store type="${tls.keystore.type}"
+			path="${tls.keystore.path}" keyPassword="${tls.keystore.keyPassword}"
+			password="${tls.keystore.password}" />
+	</tls:context>
+	<tls:context name="TLS_Context_Request"
+		doc:name="TLS Context" doc:id="a3085002-80cb-4b40-ac94-521f734969a3">
+		<tls:trust-store path="${tls.truststore.certificare.path}" password="${tls.truststore.password}" type="jks"/>
+	</tls:context>
+	<http:request-config
+		name="HTTP_Request_configuration"
+		doc:name="HTTP Request configuration"
+		doc:id="5153d37e-9cee-4cac-9acd-b5e951d97bf4">
+		<http:request-connection protocol="HTTPS" tlsContext="TLS_Context_Request">
+			<reconnection>
+				<reconnect frequency="10000" count="5" />
+			</reconnection>
+		</http:request-connection>
+	</http:request-config>
+	<global-property doc:name="Global Property"
+		doc:id="5d45f6b9-cd46-4eb0-9aad-bed17a05827f" name="mule.env"
+		value="local" />
+
+	<flow name="setVeriablesStartFlow"
+		doc:id="ca89739f-da35-4934-a145-5a21cda4eecf">
+		<ee:transform doc:name="Set Variables"
+			doc:id="8a22eb21-0c5b-4a3a-9784-5b7f5784279c">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="payload"><![CDATA[%dw 2.0
+output json
+---
+payload]]></ee:set-variable>
+				<ee:set-variable variableName="attributes"><![CDATA[%dw 2.0
+output json
+---
+attributes]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="Logger_Start"
+		doc:id="bf44c419-fdf7-41d2-9322-3a3aa2f1dcb3">
+		<logger level="DEBUG" doc:name="START"
+			doc:id="bc9dda85-4095-401a-ba36-11e39a4a4638"
+			message="#[output java&#10;---&#10;'&#10;Trace Point - START - ' ++ write(vars.attributes.requestPath, 'application/json') ++ '&#10;'&#10;++ write(vars.Payload, 'application/json')]"
+			category="flow.start" />
+	</flow>
+	<flow name="Logger_End"
+		doc:id="b193c366-7a67-4449-a558-9d0c0b50a6c2">
+		<logger level="DEBUG" doc:name="END"
+			doc:id="4d6a7483-9609-4c1f-a380-1d3195855e78"
+			message="#[output java&#10;---&#10;'&#10;Trace Point - END - ' ++ write(vars.attributes.requestPath, 'application/json') ++ '&#10;'&#10;++ write(vars.Payload, 'application/json')]"
+			category="flow.end" />
+	</flow>
+
+</mule>

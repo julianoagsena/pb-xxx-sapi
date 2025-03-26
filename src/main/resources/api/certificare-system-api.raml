@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: SalesForce System API
+description: API de integração com o Certificare
+version: v1
+
+types:
+  getCaseRequest: !include /data-types/input/getCaseRequest.raml
+  getCaseResponse: !include /data-types/output/getCaseResponse.raml
+
+/case:
+  get:
+    description: Método que permite a consulta de Case (pendências)
+    body:
+      application/json:
+        type: getCaseRequest
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCaseResponse
+            example: !include /data-types/output/examples/getCaseResponseExample.json

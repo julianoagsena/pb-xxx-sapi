@@ -1,0 +1,22 @@
+# Para mais informações sobre a configuração do arquivo pipeline.yml,
+# acesse https://github.com/petrobrasbr/d9i3-templates/blob/main/docs/pipeline-yml/index.md
+###########################################################################################
+env:
+  SkipSonarOnSnapshot: false
+  SkipSastOnSnapshot: false
+  SkipScaOnSnapshot: false
+  SkipCsScannerOnSnapshot: false
+
+build:
+  maven:
+    MvnVersion: 3.8.6
+    UseSonarPlugin: false
+    SonarProjectName: a17118-pb-us-projetosdp-sispen-sapi-dev
+    IsMuleSoft: true  
+
+upload:
+  maven:
+
+deploy:
+  SnapshotEnvs: DSV, TST
+  StartReleaseEnvs: HMG
