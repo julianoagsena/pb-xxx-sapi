@@ -1,0 +1,43 @@
+# Para mais informações sobre a configuração do arquivo deploy-config.yml,
+# acesse https://github.com/petrobrasbr/d9i3-templates/blob/main/docs/deploy-config-yml/index.md
+################################################################################################
+serverType: 'mulesoft'
+artifacts:
+  a17118-pb-us-projetosdp-certificare-sapi:
+    codigoAplicacao: "a17118"
+    groupId: "br.com.petrobras.mulesoft"
+    artifactId: "pb-us-projetosdp-certificare-sapi"
+    serverType: "mulesoft"
+    organization: "SIG"
+    region: "sa-east-1"
+    encryptionKey: "MULE_ENCRYPTION_KEY_IF_USED"
+    envConfigGitUrl: "https://git.ep.petrobras.com.br/700F/mule-configs.git"
+    appNamePrefix: "pb-us-projetosdp-certificare-sapi"
+envs:
+  DSV:
+    a17118-pb-us-projetosdp-certificare-sapi:
+      muleEnv: "dev"
+      applicationName: "pb-us-projetosdp-certificare-sapi-dev"
+      workers: "1"
+      workerSize: "0.1"
+  TST:
+    a17118-pb-us-projetosdp-certificare-sapi:
+      reviewers: "A17118_WRITE_TEAM"
+      muleEnv: "test"
+      applicationName: "pb-us-projetosdp-certificare-sapi-test"
+      workers: "1"
+      workerSize: "0.1"
+  HMG:
+    a17118-pb-us-projetosdp-certificare-sapi:
+      reviewers: "A17118_MAINTAIN_TEAM"
+      muleEnv: "stag"
+      applicationName: "pb-us-projetosdp-certificare-sapi-stag"
+      workers: "1"
+      workerSize: "0.1"
+  PRD:
+    a17118-pb-us-projetosdp-certificare-sapi:
+      reviewers: "A17118_MAINTAIN_TEAM"
+      muleEnv: "prod"
+      applicationName: "pb-us-projetosdp-certificare-sapi-prod"
+      workers: "2"
+      workerSize: "0.1"
