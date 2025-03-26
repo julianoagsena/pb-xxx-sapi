@@ -8,10 +8,13 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="get-case-test-suite.xml" />
-	<munit:test name="get-case-test-suite-get-caseFlowTest" doc:id="475ac1e5-9d48-476e-8018-6664a555253e" description="Test">
+	<munit:test name="get-case-test-suite-get-caseSub_FlowTest" doc:id="a05c1156-6e6e-4fd1-acc3-f92ec5ffd1bb" description="Test">
 		<munit:execution >
-			<flow-ref doc:name="Flow-ref to get-caseFlow" doc:id="30965b61-b023-46fa-89ff-475e360ad12e" name="get-caseFlow"/>
+			<flow-ref doc:name="Flow-ref to get-caseSub_Flow" doc:id="c041aefc-ee9f-44e2-93ae-cbcae89102a5" name="get-caseSub_Flow"/>
 		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="666ba643-8d32-4c43-89c6-6250a5a13f89" actual="#[payload]" expected='#[{&#10;	"mensagem":"mensagem"&#10;}]'/>
+		</munit:validation>
 	</munit:test>
 
 
